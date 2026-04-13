@@ -6,7 +6,7 @@ Flat catalog of all documents. One-line summary per entry. Updated on every add/
 
 ## Evaluations
 
-<!-- Tool/product viability assessments. Format: - [Title](path) — one-line summary -->
+- [Context7 MCP Server](evaluations/context7-mcp.md) — MCP server for fetching current library/framework docs; verdict: adopt
 
 ## References
 
