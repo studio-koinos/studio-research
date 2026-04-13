@@ -1,79 +1,40 @@
-# RES-2: Migrate research docs from agent-ops to studio-research
+# studio-research S-02 — RES-4, RES-7
 
-## Acceptance criteria
+## RES-4: Integration test — agent discoverability from cross-repo session
+**Linear:** https://linear.app/koinos-studio/issue/RES-4
 
-- [ ] All 5 source docs migrated into studio-research with correct frontmatter + required sections for page type
-- [ ] `index.md` populated with one-line entry per migrated doc under correct category heading
-- [ ] `log.md` has one `migrate` entry per doc
-- [ ] No broken cross-references (relative paths only, no wikilinks)
-- [ ] Source files cleaned up: remove originals from agent-ops/research/ and studio-pm/research/, or replace with a one-line pointer to the new location
+### What to verify
+Open a session in `../studio-agent-ops/` (or simulate from this repo), then confirm an agent can:
+1. Glob for docs: `../studio-research/**/*.md`
+2. Grep for content: e.g. `grep "knowledge base" ../studio-research/references/agent-kb-structure.md`
+3. Read the full doc via relative path
+4. Cite a specific finding from the doc with file path + quote
 
-## Doc migration list
+Run each step, show the output. This is runtime verification — not "the files exist so it should work."
 
-### 1. obsidian-knowledge-management.md — ALREADY DONE (untracked, needs commit)
-- Source: `studio-agent-ops/research/obsidian-style-knowledge-management.md`
-- Target: `references/obsidian-knowledge-management.md` ← file already exists, untracked
-- Action: commit as-is, update index.md, append log.md, clean up source
+### Acceptance criteria
+- [ ] Glob returns all 6 docs (5 references + 1 evaluation)
+- [ ] Grep finds relevant content by keyword across the repo
+- [ ] Read works on a full doc via relative path from a sibling repo working directory
+- [ ] Citation pattern confirmed (file path + quoted excerpt)
+- [ ] Log findings in RES-4 Linear comment, close as Done
 
-### 2. claude-code-config.md
-- Source: `../studio-agent-ops/research/claude-code-official-config-reference.md`
-- Target: `references/claude-code-config.md`
-- Type: reference (deep dive into Claude Code config system)
-- Action: read source, write with correct frontmatter + sections (TL;DR, How It Works, Current State, Applicability to Our Stack, Key Sources), update index.md, append log.md, clean up source
-
-### 3. agent-kb-structure.md
-- Source: `../../studio-pm/research/agent-knowledge-base-structure.md`
-- Target: `references/agent-kb-structure.md`
-- Type: reference (architecture research on agent knowledge base structures — llm-wiki vs gbrain vs Obsidian)
-- Action: read source, write with correct frontmatter + sections, update index.md, append log.md, clean up source
-
-### 4. claude-code-config-version-control.md
-- Source: `../studio-agent-ops/research/claude-code-config-version-control.md`
-- Target: determine via RESOLVER.md — likely `references/` (tech deep dive) or `guides/` (step-by-step). Read source first to decide.
-- Action: route via RESOLVER, write with correct frontmatter + sections for chosen type, update index.md, append log.md, clean up source
-
-### 5. continuous-agent-ops-patterns.md
-- Source: `../studio-agent-ops/research/continuous-agent-ops-patterns.md`
-- Target: determine via RESOLVER.md — likely `references/` (patterns = architecture research). Read source first to confirm.
-- Action: route via RESOLVER, write with correct frontmatter + sections, update index.md, append log.md, clean up source
-
-## Frontmatter schema (from CLAUDE.md)
-
-```yaml
 ---
-title: "Document Title"
-description: "One-line summary for agent relevance screening"
-tags: [tag1, tag2, tag3]
-modified: 2026-04-13
-status: active
-confidence: high          # high | medium | low
-staleness: 30             # days — fast-moving AI tech = 14, stable standards = 90
-related:
-  - ../references/other-doc.md
----
-```
 
-## Schema rules
-- `description` is how agents decide whether to read — make it specific
-- `confidence`: high = multiple independent sources, medium = single credible source, low = unverified
-- `staleness`: Claude Code configs = 14 days (fast-moving), patterns/architecture = 60 days
-- `related` uses relative file paths, not wikilinks
+## RES-7: Schema refinement — formalize S-01 observations
+**Linear:** https://linear.app/koinos-studio/issue/RES-7
 
-## log.md format
+### What to update in CLAUDE.md
+Three observations from S-01 real usage:
 
-```
-## [2026-04-13] migrate | Title (from studio-agent-ops)
-```
+1. **"Conflicts & Gaps" section** — appeared organically in all migrated docs. Add as an optional-but-recommended section to the References and Evaluations page type definitions (not required, so existing docs stay valid).
 
-## index.md format
+2. **Research provenance blockquote** — the `> Research date / Last verified / Staleness warning / Confidence summary` block at doc top is useful. Make it explicit in the schema (currently implied but not stated).
 
-```
-- [Title](path/to/doc.md) — one-line summary
-```
-Under the correct category heading (## References, ## Guides, etc.)
+3. **Required section headings are conceptual, not literal** — clarify in CLAUDE.md that "How It Works" means "explain how it works," not that the heading must literally say "How It Works." Agents adapting content to a different heading still satisfy the intent.
 
-## Source cleanup rule
-
-After migrating each doc, either:
-- Delete the original from the source repo (preferred if no other references)
-- Or replace with: `# [Title]\n\nMigrated to studio-research. See [references/doc.md](../studio-research/references/doc.md).`
+### Acceptance criteria
+- [ ] CLAUDE.md updated with the three clarifications
+- [ ] No existing docs invalidated (no new *required* sections)
+- [ ] Append to log.md: `## [2026-04-13] update | Schema refinements (S-01 observations)`
+- [ ] Close RES-7 as Done

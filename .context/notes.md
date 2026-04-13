@@ -1,40 +1,30 @@
-# Notes for RES-2 builder
+# Notes for studio-research S-02
 
-## Context
+## State at handover (2026-04-13)
 
-studio-research is an agent-first knowledge base (Karpathy llm-wiki pattern + gbrain RESOLVER concept). Plain markdown in git — no code, no services. Agents in other studio repos discover research here via Glob/Grep on `../studio-research/`.
+RES-1 (scaffold) and RES-2 (migration) are both Done and merged to master.
 
-The scaffold (RES-1) is live at `studio-koinos/studio-research`. Schema and conventions are in `.claude/CLAUDE.md`. Directory routing is in `RESOLVER.md`.
+Current master content:
+- `references/`: 5 docs — agent-kb-structure, claude-code-config-reference, claude-code-config-version-control, continuous-agent-ops-patterns, obsidian-knowledge-management
+- `evaluations/`: 1 doc — context7-mcp (adopt verdict, schema smoke test from S-01)
+- `index.md` and `log.md` are up to date
 
-## Repo layout relative to studio-research
+## Dependency chain
 
-All paths are relative to `studio-research/`:
-- Source docs in agent-ops: `../studio-agent-ops/research/`
-- Source doc in studio-pm: `../../studio-pm/research/` (note: two levels up)
+RES-4 (integration test) → RES-6 (into service) → RES-5 (managed agents, deferred)
 
-## Key decisions already made
+RES-6 is being handled separately by studio-pm via dispatch — it touches multiple repo CLAUDE.md files. Do NOT do RES-6 from this session.
 
-- **No wikilinks** — use standard relative markdown links only. Agents can't resolve wikilinks.
-- **required sections vary by page type** — check CLAUDE.md before writing each doc
-- **All URLs in Key Sources must have access dates** — format: `URL (YYYY-MM-DD)`
+RES-7 (schema refinement) is independent — do it here.
 
-## The untracked file
+## What PM has verified
 
-`references/obsidian-knowledge-management.md` already exists and is properly formatted. Just commit it. Read it first to confirm frontmatter is valid, then stage + include in the commit.
+- All 5 reference docs: correct frontmatter (8 fields), required sections present, no wikilinks used as cross-references
+- context7-mcp.md evaluation: P2 and P3 codex-review findings already fixed (scoped adoption verdict, real URLs in Key Sources)
+- Source files in studio-agent-ops and studio-pm replaced with one-line pointers (committed)
 
-## Source doc notes (from PM review)
+## Priority order for this session
 
-- `obsidian-style-knowledge-management.md` in agent-ops: content is "evaluated and rejected for studio-research" — keep the doc, it's historical reference, but note that conclusion in description
-- `agent-knowledge-base-structure.md` in studio-pm: this is the S-02 deep research output that informed the studio-research design decision. High value. Mark confidence: high.
-- `claude-code-official-config-reference.md`: Claude Code config is fast-moving — set staleness: 14
-- Use RESOLVER.md to route the two undecided docs (config-version-control, continuous-agent-ops-patterns)
-
-## Commit
-
-Single commit: `RES-2: migrate 5 research docs from agent-ops and studio-pm`
-
-Branch: `feature/res-2-migrate-research-docs-from-agent-ops-to-studio-research`
-
-## Linear
-
-After committing: update RES-2 status to Done in Linear (team: RESEARCH).
+1. RES-4 (integration test) — gate for RES-6, do this first
+2. RES-7 (schema refinement) — independent, do second
+3. Report results back (Linear comments + status updates)
