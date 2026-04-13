@@ -33,7 +33,7 @@ The server is maintained as a Claude.ai remote MCP integration. It covers major 
 
 **Verdict: Adopt**
 
-- **Already operational** — connected as a Claude.ai MCP server, auto-invoked by Claude Code
+- **Already operational on Ali's setup** — connected as a Claude.ai remote MCP server in `~/.claude.json`. MCP config is not version-controlled (see `references/claude-code-config-version-control.md`), so new machines/environments require manual setup via claude.ai/settings → Integrations.
 - **Zero maintenance** — no API keys, no self-hosting, no version pinning
 - **Addresses a real problem** — Claude's training data has a cutoff; Context7 provides current docs for fast-moving libraries (e.g., Claude Code's own config surface changes weekly)
 - **Non-blocking** — if the server is unavailable, Claude falls back to training data; no hard dependency
@@ -58,5 +58,6 @@ The server is maintained as a Claude.ai remote MCP integration. It covers major 
 
 ## Key Sources
 
-1. Context7 MCP server instructions — observed in Claude Code session context (2026-04-13)
-2. MCP tool schema: `resolve-library-id`, `query-docs` — observed via ToolSearch (2026-04-13)
+1. Context7 project (Upstash): https://github.com/upstash/context7 (2026-04-13)
+2. Context7 homepage and docs: https://context7.com (2026-04-13)
+3. Claude.ai MCP integrations: https://claude.ai/settings (2026-04-13) — Context7 listed as available remote MCP server
