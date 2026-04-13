@@ -32,15 +32,19 @@ studio-research/
 
 ## Page types and required sections
 
+Section headings are conceptual, not literal. A doc satisfies "How It Works" with any heading that explains the mechanism (e.g. "Architecture", "How Claude Discovers Files"). Match headings to the doc's natural phrasing.
+
 ### Evaluations (evaluations/)
 Tool or product viability assessments. Typically Scout outputs.
 
 Required sections: **TL;DR**, **What It Is**, **Viability Assessment** (adopt / defer / reject with reasoning), **Tradeoffs**, **Key Sources**
+Optional: **Conflicts & Gaps** — tensions between sources, contradictions, or open questions worth flagging
 
 ### References (references/)
 Architecture research, technology deep dives, tech comparisons.
 
 Required sections: **TL;DR**, **How It Works**, **Current State**, **Applicability to Our Stack**, **Key Sources**
+Optional: **Conflicts & Gaps** — tensions between sources, contradictions, or open questions worth flagging
 
 ### Guides (guides/)
 Step-by-step integration or implementation guides.
@@ -76,6 +80,19 @@ Field rules:
 - `staleness` varies by domain: fast-moving tech (AI APIs) = 14 days, stable standards = 90 days
 - `related` uses relative file paths, not wikilinks
 - `confidence`: high = multiple independent sources, medium = single credible source, low = unverified
+
+## Provenance block
+
+Every doc includes a provenance block immediately after the frontmatter, before the first heading:
+
+```markdown
+> **Research date:** YYYY-MM-DD
+> **Last verified:** YYYY-MM-DD
+> **Staleness warning:** Re-verify after N days. [Why this area changes fast.]
+> **Confidence summary:** X VERIFIED claims, Y LIKELY claims, Z UNVERIFIED claims
+```
+
+This block is mandatory. It makes staleness and verification status visible to agents without reading the full doc.
 
 ## Cross-referencing
 

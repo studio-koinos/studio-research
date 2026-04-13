@@ -22,3 +22,6 @@ Design: Karpathy llm-wiki pattern + gbrain RESOLVER concept. See studio-pm/docs/
 
 ## [2026-04-13] add | Context7 MCP Server
 Evaluation of Context7 MCP for real-time library docs. Verdict: adopt. First evaluation-type doc — tests the filing workflow.
+
+## [2026-04-13] update | Schema refinements (S-01 observations)
+CLAUDE.md: conceptual headings note, Conflicts & Gaps optional section (Evaluations + References), Provenance block made explicit.
