@@ -25,3 +25,6 @@ Evaluation of Context7 MCP for real-time library docs. Verdict: adopt. First eva
 
 ## [2026-04-13] update | Schema refinements (S-01 observations)
 CLAUDE.md: conceptual headings note, Conflicts & Gaps optional section (Evaluations + References), Provenance block made explicit.
+
+## [2026-04-27] add | Agentic Substrate Distribution (landscape)
+Multi-source landscape survey for AO-157. 3 industries (dotfiles, MLOps, LLM platforms) × 7 axes (incl. secrets, sync, audit). 38 dated primary sources. Triangulated across Perplexity (sonar-pro fallback after sonar-deep-research refused fabrication), web research subagent, and local context. Headline: Cloudflare Artifacts (private beta 2026-04-16, public early May 2026) ships the exact architecture for Tier 1; pragmatic today is private-GitHub-repo + SOPS+age + 1Password CLI. AO-160 debug log location decision (`.claude/events-debug.log` not `/tmp`) confirmed by research.
