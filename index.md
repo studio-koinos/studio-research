@@ -26,6 +26,8 @@ Flat catalog of all documents. One-line summary per entry. Updated on every add/
 
 <!-- Market surveys, category overviews. Format: - [Title](path) — one-line summary -->
 
+- [Agentic Substrate Distribution](landscapes/agentic-substrate-distribution.md) — How teams distribute, version, sync, and protect shared/per-user developer-environment artifacts. Surveys 3 industries × 7 axes (dotfiles, MLOps, LLM platforms; secrets, sync, history, audit). Headline: Cloudflare Artifacts (2026-04-16 beta) ships exactly the architecture for Tier 1 substrate; today's pragmatic pick is private-GitHub-repo + SOPS+age + 1Password CLI.
+
 ## Archive
 
 <!-- Obsolete or superseded research. Format: - [Title](path) — archived YYYY-MM-DD, reason -->
