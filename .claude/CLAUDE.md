@@ -1,135 +1,94 @@
-# studio-research
-
-Centralized knowledge base for the studio ecosystem. Stores deep research outputs — tool evaluations, architecture analysis, tech comparisons, integration guides — consumed primarily by AI agents during coding sessions.
-
-**This is a knowledge base, not a tool.** No code, no services, no deployments. Plain markdown in git.
-
-**Owner:** Ali Argun, Koinos Studio founder.
-
-## How agents use this repo
-
-Agents in other studio repos discover research here via `Glob` and `Grep` on `../studio-research/`. The workflow:
-
-1. **Before starting new research**, check if it already exists here
-2. **Read `index.md`** — flat catalog with one-line summaries, organized by category
-3. **Grep for keywords** — frontmatter `tags` and `description` fields are designed for this
-4. **Read the relevant doc** — each doc is self-contained with dated sources
-
-## Structure
-
-```
-studio-research/
-├── CLAUDE.md              # this file — schema and conventions
-├── RESOLVER.md            # agent decision tree: where does a new doc go?
-├── index.md               # flat catalog: every doc, one-line summary, by category
-├── log.md                 # append-only audit trail
-├── evaluations/           # tool/product evaluations
-├── references/            # architecture research, tech deep dives
-├── guides/                # integration guides, how-tos
-├── landscapes/            # market/tool landscape surveys
-└── archive/               # obsolete research, preserved for provenance
-```
-
-## Page types and required sections
-
-Section headings are conceptual, not literal. A doc satisfies "How It Works" with any heading that explains the mechanism (e.g. "Architecture", "How Claude Discovers Files"). Match headings to the doc's natural phrasing.
-
-### Evaluations (evaluations/)
-Tool or product viability assessments. Typically Scout outputs.
-
-Required sections: **TL;DR**, **What It Is**, **Viability Assessment** (adopt / defer / reject with reasoning), **Tradeoffs**, **Key Sources**
-Optional: **Conflicts & Gaps** — tensions between sources, contradictions, or open questions worth flagging
-
-### References (references/)
-Architecture research, technology deep dives, tech comparisons.
-
-Required sections: **TL;DR**, **How It Works**, **Current State**, **Applicability to Our Stack**, **Key Sources**
-Optional: **Conflicts & Gaps** — tensions between sources, contradictions, or open questions worth flagging
-
-### Guides (guides/)
-Step-by-step integration or implementation guides.
-
-Required sections: **Prerequisites**, **Steps**, **Verification**, **Troubleshooting**, **Key Sources**
-
-### Landscapes (landscapes/)
-Market surveys, tool landscape analyses, category overviews.
-
-Required sections: **TL;DR**, **Landscape Map**, **Comparison Table**, **Recommendation**, **Key Sources**
-
-## Frontmatter schema
-
-Every doc starts with this YAML frontmatter:
-
-```yaml
 ---
-title: "Document Title"
-description: "One-line summary for agent relevance screening"
-tags: [tag1, tag2, tag3]
-modified: 2026-04-13
-status: active            # active | draft | deprecated | archived
-confidence: high          # high | medium | low
-staleness: 30             # days before re-verify (per-doc)
-related:
-  - ../references/other-doc.md
+role: Centralized research knowledge base for the studio fleet — tool evaluations, architecture analysis, integration guides
+substrate: capability
+linear-team: RES
+status: active
+owner: aliargun
+loop-position: producer
+last-reviewed: 2026-05-03
 ---
+
+# CLAUDE.md — studio-research
+
+## What This Is
+
+Centralized knowledge base for the studio ecosystem. Stores deep research outputs — tool evaluations, architecture analysis, tech comparisons, integration guides — consumed primarily by AI agents during coding sessions. **Knowledge base, not a tool.** No code, no services, no deployments. Plain markdown in git.
+
+## Substrate Class
+
+**Capability substrate. Producer.** Capability-knowledge base — knowledge *about how to build capability*, not per-tenant graph data. Consumers are exclusively Capability-substrate agents (studio-agent-ops, studio-pm, studio-radar, studio-scout). Distinct from Knowledge substrate (koinos-context's per-tenant graph) — vocabulary collision per ADR-037 §Required follow-ups.
+
+## Scope
+
+### In scope (this repo authors)
+
+- `evaluations/` — tool/product viability assessments (typically Scout outputs)
+- `references/` — architecture research, technology deep dives, tech comparisons
+- `guides/` — step-by-step integration / implementation guides
+- `landscapes/` — market surveys, tool landscape analyses
+- `archive/` — obsolete research, preserved for provenance
+- `index.md` — flat catalog with one-line summaries by category
+- `RESOLVER.md` — agent decision tree for filing
+- `log.md` — append-only audit trail
+
+### Out of scope (consumed, not authored)
+
+| Out-of-scope content | Authoritative location |
+|---|---|
+| Code, scripts, tools | respective repos |
+| Session logs | each repo's `sessions/` |
+| ADRs (cross-substrate architecture) | `koinos-pm/adrs/` |
+| Ephemeral task state | `.context/` in respective repo |
+| Memory files | `~/.claude/projects/*/memory/` |
+| Knowledge graph engine + per-tenant data | `koinos-context` |
+
+### Cross-repo flows
+
+| Flow | Direction | Mechanism | Status |
+|---|---|---|---|
+| Research consumption | studio-* repos → this repo | `Glob ../studio-research/**/*.md` + `Grep` | live |
+| Scout output filing | studio-scout → `evaluations/` | manual file (per RESOLVER.md) | live |
+| Capability registry | this repo → studio-agent-ops AO-104 design | manual reference (`landscapes/agentic-fleet-platforms.md`) | live |
+| Knowledge graph indexing (aspirational) | this repo → koinos-context | tagged-for-cross-fleet-relevance pipeline | aspirational |
+
+### Anti-patterns (PR review pushes back)
+
+- **Authoring code, scripts, or tools here** — markdown only.
+- **Filing without `RESOLVER.md` consultation** — read it first; categories matter.
+- **`[[wikilinks]]`** — agents can't resolve them; use relative paths.
+- **Undated sources** — every URL must have access/publication date in Key Sources.
+- **Bypassing the provenance block** — `Research date / Last verified / Staleness warning / Confidence summary` is mandatory.
+
+### When scope bends
+
+If a piece of work doesn't fit the predicate above, route per ADR-037 §Decision-routing rule:
+
+- **Architectural** → `koinos-pm/adrs/`
+- **Operational** (capability fleet runtime) → `studio-pm/decisions.jsonl`
+- **Commercial / brand / strategic / equity** → `koinos-os/decisions.md`
+- **Cross-cutting** → `koinos-pm/adrs/` canonical + cross-link
+
+## Repo orientation
+
+```
+evaluations/    Tool/product viability (Scout outputs)
+references/     Architecture, deep dives, comparisons
+guides/         Integration / implementation guides
+landscapes/     Market + tool landscape surveys
+archive/        Obsolete research (preserved for provenance)
+RESOLVER.md     Agent decision tree (where does a new doc go?)
+index.md        Flat catalog
+log.md          Append-only audit trail
 ```
 
-Field rules:
-- `description` is how agents decide whether to read the full doc — make it specific
-- `modified` is the last substantive edit date (not typo fixes)
-- `staleness` varies by domain: fast-moving tech (AI APIs) = 14 days, stable standards = 90 days
-- `related` uses relative file paths, not wikilinks
-- `confidence`: high = multiple independent sources, medium = single credible source, low = unverified
+## Key references
 
-## Provenance block
-
-Every doc includes a provenance block immediately after the frontmatter, before the first heading:
-
-```markdown
-> **Research date:** YYYY-MM-DD
-> **Last verified:** YYYY-MM-DD
-> **Staleness warning:** Re-verify after N days. [Why this area changes fast.]
-> **Confidence summary:** X VERIFIED claims, Y LIKELY claims, Z UNVERIFIED claims
-```
-
-This block is mandatory. It makes staleness and verification status visible to agents without reading the full doc.
-
-## Cross-referencing
-
-Use standard relative markdown links: `[Other Doc](../references/other-doc.md)`
-
-**Do not use `[[wikilinks]]`.** Agents cannot resolve them without semantic inference. Relative paths are directly readable.
-
-## Filing workflow
-
-When adding a new doc:
-
-1. Read `RESOLVER.md` — determine which directory
-2. Read that directory's `README.md` — confirm the doc belongs there
-3. Write the doc with correct frontmatter + required sections for the page type
-4. Update `index.md` — add entry under the correct category with one-line summary
-5. Append to `log.md` — `## [YYYY-MM-DD] add | Document Title`
-
-## Key Sources section (mandatory on every doc)
-
-Every doc ends with a **Key Sources** section. Every URL must have an access/publication date:
-
-```markdown
-## Key Sources
-
-1. Source Name: URL (YYYY-MM-DD)
-2. Source Name: URL (YYYY-MM-DD)
-```
-
-## What does NOT belong here
-
-- Code, scripts, or tools (those go in their respective repos)
-- Session logs (those stay in each repo's sessions/)
-- ADRs (those go in koinos-pm/adrs/)
-- Ephemeral task state (that goes in .context/)
-- Memory files (those stay in ~/.claude/projects/*/memory/)
+- **Page types + required sections:** see Evaluations / References / Guides / Landscapes sections in this file's predecessor (each page type has required headings)
+- **Frontmatter schema:** `title`, `description`, `tags`, `modified`, `status`, `confidence`, `staleness`, `related`
+- **Provenance block (mandatory):** `Research date / Last verified / Staleness warning / Confidence summary`
+- **Cross-references:** standard relative markdown links, not wikilinks
+- **Filing workflow:** RESOLVER.md → directory README → write doc → update index.md → append log.md
 
 ## Linear
 
-- Team: RESEARCH (RES)
-- Project: Research — centralized knowledge base
+Team `RES` (RESEARCH, parent: STUDIO).
