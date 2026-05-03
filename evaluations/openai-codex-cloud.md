@@ -1,15 +1,14 @@
 ---
 title: "OpenAI Codex Cloud — Capability Profile"
 description: "Cloud-managed Codex agent execution environment from OpenAI. Capability profile across 12 dimensions for Mission 2 BackendAdapter evaluation: spawn, send, read, status, kill, list, persistence, auth, pricing, reach, visibility, portability."
-research_date: 2026-04-29
-last_verified: 2026-04-29
-staleness_warning: "Re-verify after 30 days. Codex Cloud is in GA with active monthly releases; pricing model changed on 2026-04-02 (token-based); usage limits revised 2026-04-09. Model lineup (GPT-5.x series) evolves frequently. Any claim about credit rates, quota windows, or CLI flags may be stale within weeks."
-confidence: medium
-sources_count: 28
-related:
-  - ../landscapes/agentic-fleet-platforms.md (forthcoming)
-  - ../landscapes/agentic-substrate-distribution.md
+tags: [openai, codex-cloud, backend-adapter, mission-2, evaluation, capability-profile]
+modified: 2026-04-29
 status: active
+confidence: medium
+staleness: 30
+related:
+  - ../landscapes/agentic-fleet-platforms.md
+  - ../landscapes/agentic-substrate-distribution.md
 ---
 
 # OpenAI Codex Cloud — Capability Profile

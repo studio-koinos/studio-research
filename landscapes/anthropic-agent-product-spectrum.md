@@ -1,16 +1,15 @@
 ---
 title: "Anthropic Agent Product Spectrum — Vendor Landscape"
 description: "Full mapping of Anthropic's agent-related products as candidates for Mission 2's fleet substrate. Covers 11 product surfaces from Messages API to Managed Agents."
-research_date: 2026-04-29
-last_verified: 2026-04-29
-staleness_warning: "Anthropic ships rapidly; agent-product surface evolves monthly. Re-verify after 30 days. Claude Managed Agents is currently in public beta (managed-agents-2026-04-01 header required); pricing and APIs may shift before GA."
+tags: [anthropic, managed-agents, claude-code, mission-2, vendor-landscape]
+modified: 2026-04-29
+status: active
 confidence: high
-sources_count: 28
+staleness: 30
 related:
   - ../evaluations/anthropic-agent-skills.md
   - ../references/claude-code-config-reference.md
   - ./agentic-substrate-distribution.md
-status: active
 ---
 
 # Anthropic Agent Product Spectrum — Vendor Landscape

@@ -1,15 +1,14 @@
 ---
 title: "Cloudflare Agent Services Stack — Vendor Landscape"
 description: "Full mapping of Cloudflare's agent-related services as composable primitives for Mission 2's fleet substrate. Covers 19 services across compute, storage, inference, observability, and security."
-research_date: 2026-04-29
-last_verified: 2026-04-29
-staleness_warning: "Cloudflare ships at high velocity. Agents Week 2026 (Apr 13–17) landed ~20 new products or GA promotions. Re-verify monthly. Agent Memory (private beta), AI Search (open beta), and Durable Object Facets are all pre-GA as of research date."
+tags: [cloudflare, agents-sdk, workers, durable-objects, mission-2, vendor-landscape]
+modified: 2026-04-29
+status: active
 confidence: high
-sources_count: 31
+staleness: 30
 related:
   - ../evaluations/cloudflare-agents.md
   - ./agentic-substrate-distribution.md
-status: active
 ---
 
 # Cloudflare Agent Services Stack — Vendor Landscape

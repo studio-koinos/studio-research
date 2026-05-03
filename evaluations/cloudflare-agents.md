@@ -1,15 +1,14 @@
 ---
 title: "Cloudflare Agents — Capability Profile"
 description: "BackendAdapter capability profile for Cloudflare's agent runtime built on Workers + Durable Objects. Covers spawn/send/read/status/kill semantics, persistence model, pricing, portability, and fit assessment for Mission 2's multi-backend fleet platform."
-research_date: 2026-04-29
-last_verified: 2026-04-29
-staleness_warning: "Cloudflare is shipping Agents SDK releases weekly (252 releases as of 2026-04-29). Re-verify within 30 days — Project Think (preview as of 2026-04-15) may reach GA; Durable Object Facets (new at Agents Week 2026) may alter sub-agent semantics; Workers AI pricing may change."
-confidence: high
-sources_count: 22
-related:
-  - ../landscapes/agentic-fleet-platforms.md (forthcoming)
-  - ../landscapes/agentic-substrate-distribution.md
+tags: [cloudflare, agents-sdk, workers, durable-objects, backend-adapter, mission-2, evaluation, capability-profile]
+modified: 2026-04-29
 status: active
+confidence: high
+staleness: 30
+related:
+  - ../landscapes/agentic-fleet-platforms.md
+  - ../landscapes/agentic-substrate-distribution.md
 ---
 
 # Cloudflare Agents — Capability Profile

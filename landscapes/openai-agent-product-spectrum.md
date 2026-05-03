@@ -1,15 +1,14 @@
 ---
 title: "OpenAI Agent Product Spectrum — Vendor Landscape"
 description: "Full mapping of OpenAI's agent-related products as candidates for Mission 2's fleet substrate. Covers API platform, Responses API, Agents SDK, AgentKit, Symphony, Codex CLI, Codex Cloud, Realtime API, Computer Use, Workspace Agents, Batch API, and supporting primitives."
-research_date: 2026-04-29
-last_verified: 2026-04-29
-staleness_warning: "OpenAI ships rapidly; agent-product surface evolves monthly. Symphony released 2026-03-05 (15k stars by late April); Workspace Agents launched 2026-04-22; AgentKit and Responses API extension are both mid-rollout. Re-verify before acting if >45 days old."
+tags: [openai, agents-sdk, symphony, codex-cloud, mission-2, vendor-landscape]
+modified: 2026-04-29
+status: active
 confidence: high
-sources_count: 38
+staleness: 45
 related:
   - ../evaluations/openai-codex-cloud.md
   - ./agentic-substrate-distribution.md
-status: active
 ---
 
 # OpenAI Agent Product Spectrum — Vendor Landscape

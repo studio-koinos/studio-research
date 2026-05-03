@@ -1,15 +1,14 @@
 ---
 title: "Anthropic Agent Skills & Managed Agents — Capability Profile"
 description: "Cloud-hosted managed agent runtime from Anthropic. Capability profile across 12 dimensions for Mission 2 BackendAdapter evaluation: spawn, send, read, status, kill, list, persistence, auth, pricing, reach, visibility, portability."
-research_date: 2026-04-29
-last_verified: 2026-04-29
-staleness_warning: "Re-verify after 30 days. Managed Agents launched April 8, 2026 and is in public beta; endpoints, rate limits, and pricing may change before GA. Multi-agent and memory features are behind a separate research-preview access request as of research date."
-confidence: high
-sources_count: 12
-related:
-  - ../landscapes/agentic-fleet-platforms.md (forthcoming)
-  - ../landscapes/agentic-substrate-distribution.md
+tags: [anthropic, managed-agents, backend-adapter, mission-2, evaluation, capability-profile]
+modified: 2026-04-29
 status: active
+confidence: high
+staleness: 30
+related:
+  - ../landscapes/agentic-fleet-platforms.md
+  - ../landscapes/agentic-substrate-distribution.md
 ---
 
 # Anthropic Agent Skills & Managed Agents — Capability Profile

@@ -1,13 +1,24 @@
 ---
-research_date: 2026-04-30
-last_verified: 2026-04-30
-staleness_warning: Re-verify after 14 days. The OpenAI Apps SDK + ChatGPT MCP support shipped in late 2025 / early 2026; cross-surface tool patterns are actively shifting. Re-verify Codex App Server, Apps SDK, and modelcontextprotocol.io/clients before any implementation work.
-confidence_summary: 18 verified, 4 likely, 3 unverified, 1 conflicting
-session: S-40 AGENTOPS
-linear: AO-183, AO-184
+title: "Cross-Surface Plugin Packaging — Landscape"
+description: "MCP as the cross-vendor LLM-tool integration layer: how to ship a single tool for Claude Code, ChatGPT, Cursor, and Continue from one MCP server. Canonical example: Linear MCP. Motivated by koinos-context and fleet tool distribution."
+tags: [mcp, plugin-packaging, claude-code, openai, cursor, cross-surface, koinos-context, fleet-tools]
+modified: 2026-04-30
+status: active
+confidence: high
+staleness: 14
+related:
+  - ./anthropic-agent-product-spectrum.md
+  - ./openai-agent-product-spectrum.md
 ---
 
 # Cross-Surface Plugin Packaging Landscape — April 2026
+
+> **Research date:** 2026-04-30
+> **Last verified:** 2026-04-30
+> **Staleness warning:** Re-verify after 14 days. The OpenAI Apps SDK + ChatGPT MCP support shipped in late 2025 / early 2026; cross-surface tool patterns are actively shifting. Re-verify Codex App Server, Apps SDK, and modelcontextprotocol.io/clients before any implementation work.
+> **Confidence summary:** 18 verified, 4 likely, 3 unverified, 1 conflicting
+> **Session:** S-40 AGENTOPS
+> **Linear:** AO-183, AO-184
 
 > **TL;DR:** MCP (Model Context Protocol, spec 2025-06-18) is the de-facto cross-vendor LLM-tool integration layer in April 2026. **All four major LLM-coding-agent surfaces (Claude Code, ChatGPT/OpenAI Codex, Cursor, Continue) consume MCP servers natively from a single source codebase.** OpenAI's **Apps SDK** ships MCP-native — ChatGPT users install MCP-backed apps from a marketplace. Linear is the canonical cross-surface example: one hosted MCP server (`https://mcp.linear.app/sse`) runs in Claude, Cursor, Windsurf, VS Code, Zed, and ChatGPT. **Recommended packaging shape for `koinos-context` and similar fleet tools: build a single MCP server (HTTP transport with OAuth), with thin per-surface install instructions; do NOT build per-surface adapters.** [VERIFIED across multiple authoritative sources]
 >

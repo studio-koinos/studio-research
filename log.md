@@ -39,3 +39,6 @@ Multi-source landscape survey for AO-157. 3 industries (dotfiles, MLOps, LLM pla
 ## [2026-04-30] add | cmux (evaluation, S-27)
 ## [2026-04-30] add | OpenAI Codex Cloud (evaluation, S-27)
 S-44 batch tracking commit per AO-188. 9 research artifacts that were authored across S-27 (4 evaluations), S-28 (4 landscapes), and S-40 (1 landscape) but never landed in git. All have dated provenance frontmatter (research_date, last_verified, staleness_warning) — content final, only tracking gap. Future-discipline: handover-session skill will be extended to grep untracked files in sibling repos at session close.
+
+## [2026-05-03] lint | Frontmatter reconciled to canonical schema (AO-192)
+All 9 AO-188 artifacts (5 landscapes + 4 evaluations) updated: added `tags`, `modified`, `staleness` to YAML; removed `research_date`, `last_verified`, `staleness_warning`, `sources_count` from YAML (demoted to provenance block in body). cross-surface-plugin-packaging.md also gained all base canonical fields (title, description, status, confidence, related) and a new provenance block. CLAUDE.md extended with optional `session` + `linear` provenance block lines.

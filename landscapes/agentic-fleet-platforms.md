@@ -1,11 +1,11 @@
 ---
 title: "Agentic Fleet Platforms — Capability Registry"
 description: "Central registry for Mission 2: 12-dim capability matrix × N backends with verdicts, integration patterns, and BackendAdapter shape implications. Promoted from .context/AO-104/synthesis-progress.md (S-27)."
-research_date: 2026-04-29
-last_verified: 2026-04-29
-staleness_warning: "Cloud-platform surfaces evolve monthly. Re-verify per-platform after 30 days. Anthropic Managed Agents (beta), Cloudflare Agents Week 2026, and OpenAI Symphony are all 2026-Q1/Q2 — high velocity. Maintenance discipline tracked via studio-radar RDR issues."
+tags: [agent-fleet, substrate, backend-adapter, platform-matrix, mission-2, vendor-landscape]
+modified: 2026-04-29
+status: active
 confidence: high
-sources_count: 104
+staleness: 30
 related:
   - ../evaluations/anthropic-agent-skills.md
   - ../evaluations/cloudflare-agents.md
@@ -17,7 +17,6 @@ related:
   - ./agentic-substrate-distribution.md
   - ../../studio-pm/research/terminal-agent-orchestration-landscape.md
   - ../../studio-pm/research/terminal-ops-cao-evaluation.md
-status: active
 ---
 
 # Agentic Fleet Platforms — Capability Registry

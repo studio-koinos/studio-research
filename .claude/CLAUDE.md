@@ -94,6 +94,15 @@ Every doc includes a provenance block immediately after the frontmatter, before 
 
 This block is mandatory. It makes staleness and verification status visible to agents without reading the full doc.
 
+Two optional lines may be appended for session-context provenance:
+
+```markdown
+> **Session:** S-NN TEAMNAME   ← session that created or last substantively updated this doc
+> **Linear:** ISSUE-N, ISSUE-M ← issue IDs that motivated this research
+```
+
+These belong in the provenance block (markdown prose), NOT in the YAML frontmatter.
+
 ## Cross-referencing
 
 Use standard relative markdown links: `[Other Doc](../references/other-doc.md)`

@@ -1,21 +1,21 @@
 ---
 title: "cmux — Capability Profile"
 description: "Source-level evaluation of manaflow-ai/cmux as a terminal-ops backend candidate for Mission 2's agent fleet platform registry. Covers all 12 capability dimensions, BackendAdapter fit, and empirical findings from Ali's production use."
-research_date: 2026-04-29
-last_verified: 2026-04-29
-staleness_warning: "cmux is in active development (manaflow-ai, YC S2024). Releases ship approximately monthly. Re-verify API surface after any minor-version bump — the JSON-RPC method set is expanding. This evaluation is against v0.63.2 (2026-04-06)."
+tags: [cmux, terminal-ops, backend-adapter, mission-2, evaluation, capability-profile, manaflow]
+modified: 2026-04-29
+status: active
 confidence: high
-sources_count: 18
+staleness: 30
 related:
   - ../landscapes/agentic-substrate-distribution.md
   - ../../studio-agent-ops/docs/orchestrator-vision.md
-status: active
 ---
 
 # cmux — Capability Profile
 
 > **Research date:** 2026-04-29
 > **Last verified:** 2026-04-29
+> **Staleness warning:** Re-verify after 30 days. cmux is in active development (manaflow-ai, YC S2024); releases ship approximately monthly and the JSON-RPC method set is expanding. This evaluation is against v0.63.2 (2026-04-06) — re-verify API surface after any minor-version bump.
 > **Version evaluated:** cmux v0.63.2 (build 79, commit `179b16ce6`, released 2026-04-06)
 > **Verification method:** Live CLI introspection (`CMUX_BUNDLED_CLI_PATH` on Ali's machine), web research (GitHub, official docs, community issues), and cross-reference of session memory entries from S-20, S-23, S-24.
 
