@@ -1,9 +1,13 @@
 ---
-title: "cmux — Full Feature Reference"
+title: "cmux — Full Feature Reference (SUPERSEDED — DO NOT USE AS FOUNDATION)"
 description: "Comprehensive command, API, and capability reference for cmux (manaflow-ai). Load-bearing document for orchestrator integration decisions."
 research_date: 2026-05-04
 last_verified: 2026-05-04
-staleness_warning: "cmux is in active development. API surface expands with each minor version. Re-verify after any version bump. This doc covers v0.63.2 (latest as of research date) plus in-repo docs that reflect current main."
+status: SUPERSEDED
+superseded_at: 2026-05-05
+superseded_by: "studio-research/landscapes/orchestration-layer-internals.md (to be authored under AO-264..AO-271 umbrella, AO-270 synthesis)"
+superseded_reason: "Predates the paste-the-output discipline established in feedback_charter_before_ratify.md. Synthesized from cmux source-code reading + reasoning, not live --help/probe paste. S-67/S-68 dispatch sequence proved this style of synthesis breaks at first contact (claude-teams binary, ❯ glyph, REPL wait, Stop hook). Per S-69 directive: dump and rebuild from official sources first, with paste-the-output evidence for every load-bearing claim. This file is preserved for provenance + comparison value only."
+staleness_warning: "SUPERSEDED — DO NOT USE AS FOUNDATION FOR THE ORCHESTRATOR REDESIGN. Refer to AO-264 + the synthesis doc at AO-270. Original staleness warning below: cmux is in active development. API surface expands with each minor version. Re-verify after any version bump. This doc covers v0.63.2 (latest as of research date) plus in-repo docs that reflect current main."
 sources:
   - url: "https://github.com/manaflow-ai/cmux/blob/main/docs/cli-contract.md"
     date: 2026-05-04
