@@ -36,6 +36,7 @@ Flat catalog of all documents. One-line summary per entry. Updated on every add/
 - [Cloudflare Agent Services Stack](landscapes/cloudflare-agent-services-stack.md) — Full mapping of Cloudflare's agent-related services as composable primitives for Mission 2's fleet substrate. Covers 19 services across compute, storage, inference, observability, and security.
 - [Cross-Surface Plugin Packaging](landscapes/cross-surface-plugin-packaging.md) — How to ship one MCP server cross-surface (Claude Code, ChatGPT, Cursor, Continue, Zed). Recommends single-MCP + thin per-surface manifests over per-surface adapters; Linear MCP as canonical example. (S-40, AO-183/AO-184.)
 - [OpenAI Agent Product Spectrum](landscapes/openai-agent-product-spectrum.md) — Full mapping of OpenAI's agent-related products as candidates for Mission 2's fleet substrate. Covers API platform, Responses API, Agents SDK, AgentKit, Symphony, Codex CLI, Codex Cloud, Realtime API, Computer Use, Workspace Agents, Batch API, and supporting primitives.
+- [Orchestration Layer Internals — Empirically Grounded Synthesis](landscapes/orchestration-layer-internals.md) — Synthesis of 7 surface deep-dives (cmux, Claude Code CLI/SDK, hooks, MCP, auth/connectors, tmux/iTerm2, Codex CLI) under "official sources first + paste-the-output" discipline (S-70, AO-263, AO-270). 14 architectural findings + 9 known gaps + 3 falsifications including a self-referential audit-document falsification. Supersedes cmux-features.md.
 
 ## Archive
 

@@ -1,3 +1,27 @@
+---
+title: "Orchestration Layer Internals — Empirically Grounded Synthesis"
+description: "Synthesis of 7 surface deep-dives (cmux, Claude Code CLI/SDK, hooks, MCP, auth/connectors, tmux/iTerm2, Codex CLI) for orchestrator v2 design discussion. 14 architectural findings + 9 known gaps + 3 falsifications including a self-referential audit-document falsification. Every load-bearing claim is paste-citation-traced to a singleton deep-dive."
+research_date: 2026-05-05
+last_verified: 2026-05-05
+staleness_warning: "Orchestration-layer surfaces evolve weekly (Claude Code 2.1.x; cmux 0.64.0 released day-of; Codex 0.128.x). Re-verify per surface after 30 days; check binary versions before relying on specific behaviors. Singletons at studio-agent-ops/.context/AO-263/ pin 2026-05-05 versions."
+confidence: high
+sources_count: 7
+related:
+  - ../../studio-agent-ops/.context/AO-263/cmux.md
+  - ../../studio-agent-ops/.context/AO-263/claude-code.md
+  - ../../studio-agent-ops/.context/AO-263/hooks.md
+  - ../../studio-agent-ops/.context/AO-263/mcp.md
+  - ../../studio-agent-ops/.context/AO-263/auth.md
+  - ../../studio-agent-ops/.context/AO-263/tmux.md
+  - ../../studio-agent-ops/.context/AO-263/codex.md
+  - ../../studio-agent-ops/.context/AO-263/PHASE-1.5-REVIEW.md
+  - ../../studio-agent-ops/decisions/008_s68-pivot-conflict-audit.md
+  - ./agentic-fleet-platforms.md
+  - ./cmux-features.md
+status: active
+supersedes: landscapes/cmux-features.md
+---
+
 # Orchestration Layer Internals — Empirically Grounded Synthesis
 
 **Version:** v0
@@ -42,7 +66,7 @@ Codex 0.128.0 inherits `OPENAI_API_KEY` into every subprocess by default — the
 Running `claude mcp get linear` prints `Authorization: Bearer lin_api_<VALUE>` to stdout. The `lin_api_*` token format is NOT covered by the `secrets-redaction-runtime.md` regex table. This is a new secrets-hygiene gap in the AO-153/AO-154 lineage. The `~/.claude/claude_code_config.json` legacy file also stores a plaintext GitHub PAT. See §6 for the full gap analysis. [mcp.md §Divergences §3]
 
 **Fact 5 — Completion detection for interactive REPLs remains architecturally open.**
-The Stop hook is insufficient for interactive REPL completion detection (fires when the model yields control; doesn't confirm the REPL session has ended). Two new paths are viable: SubagentStop provides `agent_transcript_path` for transcript-tail completion detection; `cmux wait-for` is a potential cmux-native coordination primitive **[HYPOTHESIS — wait-for not probed in this phase]**. The explicit-Bash-emit pattern (emit-event.sh) remains viable but in-band. [decisions/008 §5.Q1, hooks.md §3.6, codex.md §3]
+The Stop hook is insufficient for interactive REPL completion detection (fires when the model yields control; doesn't confirm the REPL session has ended). Two new paths are viable: SubagentStop provides `agent_transcript_path` for transcript-tail completion detection; a hypothetical cmux blocking-call primitive (name unverified — may be `wait-for`, may not exist; cmux.md does not enumerate it) **[HYPOTHESIS — name and existence both unverified in AO-264 scope]**. The explicit-Bash-emit pattern (emit-event.sh) remains viable but in-band. [decisions/008 §5.Q1, hooks.md §3.6, codex.md §3]
 
 ---
 
@@ -100,7 +124,7 @@ This section synthesizes the 16 bilateral-sufficient edges from the Phase 1.5 co
 
 **Critical: `authMethod` is NOT the active auth method.** When ANTHROPIC_API_KEY is set in env, `claude auth status --json` shows `authMethod: "claude.ai"` (the configured subscription method) but adds `apiKeySource: "ANTHROPIC_API_KEY"`. Live truth is `apiKeySource`. Orchestrators checking auth state must read `apiKeySource`, not `authMethod`. [auth.md §1 Test 3, §10 Divergence §1]
 
-**ANTHROPIC_API_KEY env-strip (post-AO-213):** Claude Code strips ANTHROPIC_API_KEY from the env passed to spawned subprocesses (builders, tools). The in-process Agent SDK `query()` call (e.g., for verifier or koinos-context MCP) inherits parent env and bills via API key — tracked as AO-214. This asymmetry affects billing discipline.
+**ANTHROPIC_API_KEY env-strip (post-AO-213):** Claude Code strips ANTHROPIC_API_KEY from the env passed to spawned subprocesses (builders, tools) per [claude-code.md §"× auth"; auth.md §1 Test 5]. The in-process Agent SDK `query()` call (e.g., for verifier or koinos-context MCP) inherits parent env and bills via API key per `memory/project_ao213_scope_gap.md` (S-51) — tracked as AO-214. This asymmetry affects billing discipline (subprocess vs in-process; the singletons cover the subprocess side; the in-process detail is captured in the memory).
 
 **`--bare` semantics:** Strips hooks, LSP, OAuth, plugins. `--bare` + inline ANTHROPIC_API_KEY=fake → `authMethod: "apiKeyHelper"` but 401 (confirms auth path, confirms bare strips cloud auth). [claude-code.md §"× auth", auth.md §1 Test 4]
 
@@ -389,7 +413,7 @@ This section documents new gaps discovered during AO-263 that fall within the AO
 
 ### 6.2 Gap: `~/.claude/claude_code_config.json` stores plaintext GitHub PAT
 
-**Evidence:** `~/.claude/claude_code_config.json` was observed during the MCP probe phase to contain a plaintext `GITHUB_PERSONAL_ACCESS_TOKEN` value. This is a legacy config file format predating the `~/.claude/.env` canonical secrets store. [mcp.md §"open questions"]
+**Evidence:** `~/.claude/claude_code_config.json` was observed during the MCP probe phase to contain a plaintext `GITHUB_PERSONAL_ACCESS_TOKEN` value. This is a legacy config file format predating the `~/.claude/.env` canonical secrets store. [mcp.md §"Plaintext bearer-token exposure" + §"open questions" Q3]
 
 **Blast radius:** Any process that reads or logs this config file exposes the GitHub PAT. The file is in the `~/.claude/` directory, which is in-scope for the session JSONL scrub (if any tool reads its contents into a transcript). `github_pat_*` format IS in the current `secrets-redaction-runtime.md` regex table — but only if the token follows the `ghp_` prefix format. Classic tokens (40-hex format) may not match.
 
@@ -445,7 +469,7 @@ Three viable paths have been empirically characterized:
 
 2. **Explicit in-band signal via emit-event.sh.** Builder emits a structured completion event to `events.jsonl` via a Bash tool call at work completion. Orchestrator polls or tails `events.jsonl`. Existing implementation in substrate. Works for any dispatch model but requires builder discipline. [decisions/008 §5.Q1]
 
-3. **cmux `wait-for` as cmux-native coordination primitive.** cmux.md mentions `wait-for` as a potential blocking call that pauses until a condition is met in a cmux pane. **[HYPOTHESIS — wait-for was not probed in AO-264 due to scope; the subcommand surface was not fully enumerated.]** If `cmux wait-for` accepts a regex or glyph condition (e.g., wait until REPL prompt glyph appears), it is a zero-configuration completion detector for cmux-hosted REPL sessions. Needs a targeted probe before relying on it.
+3. **A hypothetical cmux blocking-call primitive (name unverified).** Could be named `wait-for` or something else; cmux.md does NOT enumerate this primitive in its CLI subcommand surface or RPC API documentation. **[HYPOTHESIS — name and existence both unverified; the architect-tier review of AO-270 grep-confirmed `wait-for` is not in cmux.md.]** IF such a primitive exists in cmux 0.63.2 and accepts a regex or glyph condition (e.g., wait until REPL prompt glyph appears), it would be a zero-configuration completion detector for cmux-hosted REPL sessions. Needs a fresh empirical probe (`cmux --help` re-walk + RPC method enumeration) to confirm or rule out before relying on it.
 
 **For interactive REPL sessions (the hardest case):** The REPL prompt glyph U+276F (confirmed 0xE2 0x9D 0xAF) is a reliable "model is ready for input" signal. A pane-content grep for this glyph after a quiet period indicates the REPL is idle. This is the tmux `capture-pane` pattern and is implementable via cmux's compat surface or directly via tmux if installed. [claude-code.md §"REPL glyph"]
 
@@ -655,7 +679,7 @@ Section-to-singleton mapping. For granular claim tracing, read the singleton dir
 | §3.5 hooks × subagents | hooks.md §6.2, §3.6, §D2 | PreToolUse subagent stdin with agent_id (hooks.md §6.2); SubagentStop schema (hooks.md §3.6) |
 | §3.6 MCP × auth | mcp.md §"OAuth/PKCE flow"; auth.md §2, §6, §8 | OAuth discovery dance 4-step paste (mcp.md); Keychain entries list (auth.md §2) |
 | §3.7 Codex × cmux | codex.md §7; cmux.md §"codex install-hooks", §"Sharp Edges §1" | hooks.json 3-hook paste (codex.md §7); install-hooks accidental execution evidence (cmux.md §Sharp Edges §1) |
-| §3.8 Codex × auth | codex.md §5.4; auth.md §5 | env | grep OPENAI_API_KEY live test (codex.md §5.4); auth.json jq keys (auth.md §5) |
+| §3.8 Codex × auth | codex.md §5.4; auth.md §5 | `env \| grep OPENAI_API_KEY` live test (codex.md §5.4); auth.json jq keys (auth.md §5) |
 | §3.9 tmux × BackendAdapter | tmux.md §3, §4 | BackendAdapter interface verbatim (tmux.md §3); --tmux enum rejection (tmux.md §1.4) |
 | §3.10 auth × cmux | auth.md §8; cmux.md §"Env injection chain" | CMUX_* present + ANTHROPIC_API_KEY absent in live env scan (auth.md §8) |
 | §4 Findings | Per finding: hooks.md, mcp.md, codex.md, claude-code.md, auth.md, tmux.md, cmux.md — see inline citations | Full paste evidence in the singleton; finding rows cite specific §section locations |
